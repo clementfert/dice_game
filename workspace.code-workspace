@@ -1,0 +1,18 @@
+{
+	"folders": [],
+	"settings": {
+		"git.ignoreLimitWarning": true
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+		
+			{
+				"type": "pwa-chrome",
+				"request": "launch",
+				"name": "Open jeu_projet_dev.html",
+				"file": "c:\\travail\\bachelor python\\jeux_projet_dev\\jeu_projet_dev.html"
+			}
+		]
+	}
+}
