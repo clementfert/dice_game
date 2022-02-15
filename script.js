@@ -11,7 +11,7 @@ class Partie {
 
 
 }
-
+// les deux variable de type objet que nous allons utiliser dans ce petit jeu 
 var player1;
 var player2;
 
@@ -32,7 +32,7 @@ function initalisation(){
     
             return player1, player2 ;
 }
-
+// la fonction rolle permet de miser on indique à l'utilisateur le joueur actif en le colorant le player en rouge
 function rolle(player1, player2){
 
     if (player1.right === true){
@@ -84,7 +84,9 @@ function rolle(player1, player2){
     }
 }
 
-
+// la fonction hold permet de sauvegarder son score courant
+// dans on verifie à qui est le tour
+// puis on lance le dé si le de est superieur à 1 donc 0 on incremente le score current et le joueur garde la main 
 function hold(player1,player2){
 
     if (player1.right=== true){
@@ -138,6 +140,34 @@ function hold(player1,player2){
     
     }
 
+    function schowDice(player1,player2){
+
+        if (player1.right===true){
+
+            $("#dice_0").hide();
+            $("#dice_2").hide();
+            $("#dice_3").hide();
+            $("#dice_4").hide();
+            $("#dice_5").hide();
+            $("#dice_6").hide();
+            
+            $(`#dice_${player1.dice}`).show();
+         }
+         else if (player2.right === true ){
+             
+            $("#dice_0").hide();
+            $("#dice_2").hide();
+            $("#dice_3").hide();
+            $("#dice_4").hide();
+            $("#dice_5").hide();
+            $("#dice_6").hide();
+            
+            $(`#dice_${player2.dice}`).show();
+
+         }
+        }
+
+
 
 
 
@@ -159,13 +189,13 @@ function getRandomInt(min, max) {
         }
         
     }
-
+// un petit console log pour verifier les resultat du dé sur la console
 console.log(getRandomInt())
 
 
 
 
-
+// l'utilisation de jquerry pour communiqué avec la page html
 $(()=>{
 
     $('#new_game').click (function(){
@@ -175,6 +205,7 @@ $(()=>{
 
     $('#rolle_dice').click(function(){
         rolle(player1 ,player2);
+        schowDice(player1,player2);
     });
 
     $('#hold').click(function(){
