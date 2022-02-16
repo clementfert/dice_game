@@ -17,6 +17,7 @@ var player2;
 
 
 
+
 function initalisation(){
 
             //initalisation des joueur
@@ -25,6 +26,11 @@ function initalisation(){
             //alerte la partie commence on indique à l'user que le joueur 1 commence
             alert('la partie va débuter le joueur 1 commence');
             $('#player1').css('color','red');
+            $('#current_score1').html(player1.curent_score);
+            $('#current_score2').html(player2.curent_score);
+            $('#score1').html(player1.score);
+            $('#score2').html(player2.score);
+
     
             console.log (player1);
             console.log (player2);
@@ -38,7 +44,8 @@ function rolle(player1, player2){
     if (player1.right === true){
 
         player1.dice = getRandomInt();
-        console.log(player1.dice)
+        console.log(player1.dice);
+        showDice(player1,player2);
 
         if( player1.dice >0){
             player1.curent_score = player1.curent_score + player1.dice;
@@ -48,6 +55,7 @@ function rolle(player1, player2){
 
         }
         else if (player1.dice === 0){
+            
         player1.curent_score=0;
         player1.right=false;
         $('#player1').css('color','black');
@@ -63,6 +71,8 @@ function rolle(player1, player2){
     else if (player2.right === true){
 
         player2.dice = getRandomInt();
+        console.log(player2.dice);
+        showDice(player1,player2);
 
         if( player2.dice >0){
             player2.curent_score = player2.curent_score + player2.dice;
@@ -89,7 +99,31 @@ function rolle(player1, player2){
 // puis on lance le dé si le de est superieur à 1 donc 0 on incremente le score current et le joueur garde la main 
 function hold(player1,player2){
 
-    if (player1.right=== true){
+     if ((player1.score + player1.curent_score) >= 100){
+        alert('le joueur 1 à gagné');
+        player1.score=0;
+        player2.score=0;
+        player1.curent_score=0;
+        player2.curent_score=0;
+        player1.right=false;
+        player2.right=false;
+
+        return player1, player2
+    }
+
+    else if ((player2.score +player2.curent_score) >= 100){
+        alert('le joueur 2 à gagné');
+        player1.score=0;
+        player2.score=0;
+        player1.curent_score=0;
+        player2.curent_score=0;
+        player1.right=false;
+        player2.right=false;
+
+        return player1, player2
+    }
+
+    else if ((player1.right=== true) && (player1.score<100)){
 
         player1.score =  player1.score + player1.curent_score;
         player1.curent_score = 0;
@@ -102,7 +136,7 @@ function hold(player1,player2){
         return player1 , player2;
     }
 
-    else if (player2.right=== true){
+    else if ((player2.right=== true) && (player2.score<100)){
 
         player2.score =  player2.score + player2.curent_score;
         player2.curent_score = 0;
@@ -114,54 +148,23 @@ function hold(player1,player2){
         $('#player2').css('color','black');
         return player1 , player2;
     }
-    else if (player1.score >= 100){
-        alert('le joueur 1 à gagné');
-        player1.score=0;
-        player2.score=0;
-        player1.curent_score=0;
-        player2.curent_score=0;
-        player1.right=false;
-        player2.right=false;
 
-        return player1, player2
-    }
-    else if (player2.score >= 100){
-        alert('le joueur 2 à gagné');
-        player1.score=0;
-        player2.score=0;
-        player1.curent_score=0;
-        player2.curent_score=0;
-        player1.right=false;
-        player2.right=false;
-
-        return player1, player2
-    }
 
     
     }
-
-    function schowDice(player1,player2){
+//cette fonction permet d'afficher le resultat du dé systeme grace au fonction hide/show
+    function showDice(player1,player2){
+        $("#dice_0").hide();
+        $("#dice_2").hide();
+        $("#dice_3").hide();
+        $("#dice_4").hide();
+        $("#dice_5").hide();
+        $("#dice_6").hide();
 
         if (player1.right===true){
-
-            $("#dice_0").hide();
-            $("#dice_2").hide();
-            $("#dice_3").hide();
-            $("#dice_4").hide();
-            $("#dice_5").hide();
-            $("#dice_6").hide();
-            
-            $(`#dice_${player1.dice}`).show();
+           $(`#dice_${player1.dice}`).show();
          }
          else if (player2.right === true ){
-             
-            $("#dice_0").hide();
-            $("#dice_2").hide();
-            $("#dice_3").hide();
-            $("#dice_4").hide();
-            $("#dice_5").hide();
-            $("#dice_6").hide();
-            
             $(`#dice_${player2.dice}`).show();
 
          }
@@ -205,7 +208,6 @@ $(()=>{
 
     $('#rolle_dice').click(function(){
         rolle(player1 ,player2);
-        schowDice(player1,player2);
     });
 
     $('#hold').click(function(){
